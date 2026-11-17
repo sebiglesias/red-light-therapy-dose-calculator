@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Red Light Therapy Dose Calculator — Joules/cm² & Session Time — Accurate Material Estimator</title>
+  <meta name="description" content="Calculate exact red light therapy exposure times in minutes and seconds using target energy fluence (J/cm²) and LED device irradiance (mW/cm²).">
+  <link rel="canonical" href="https://sebiglesias.com.ar/red-light-therapy-dose-calculator/">
+  <meta name="theme-color" content="#ef4444">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Red Light Therapy Dose Calculator — Joules/cm² & Session Time">
+  <meta property="og:description" content="Calculate exact red light therapy exposure times in minutes and seconds using target energy fluence (J/cm²) and LED device irradiance (mW/cm²).">
+  <meta property="og:url" content="https://sebiglesias.com.ar/red-light-therapy-dose-calculator/">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-2BNDBQP0W7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-2BNDBQP0W7');
+  </script>
+
+  <!-- Google AdSense -->
+  <meta name="google-adsense-account" content="ca-pub-3381238987477190">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3381238987477190" crossorigin="anonymous"></script>
+
+  <!-- JSON-LD Schema -->
+  <script type="application/ld+json">
+  [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Red Light Therapy Dose Calculator \u2014 Joules/cm\u00b2 & Session Time",
+    "url": "https://sebiglesias.com.ar/red-light-therapy-dose-calculator/",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "description": "Calculate exact red light therapy exposure times in minutes and seconds using target energy fluence (J/cm\u00b2) and LED device irradiance (mW/cm\u00b2).",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I calculate red light therapy treatment time?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Use the standard photobiology formula: Session Time (seconds) = [Target Fluence (Joules/cm\u00b2) \u00d7 1000] \u00f7 Irradiance (mW/cm\u00b2). For instance, delivering 6 J/cm\u00b2 with a panel measuring 50 mW/cm\u00b2 requires (6 \u00d7 1000) / 50 = 120 seconds (2 minutes)."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I overdo red light therapy?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Due to the biphasic dose response (Arndt-Schulz curve), excessive light exposure (>30 J/cm\u00b2 on a single area) triggers phototoxicity and reduces cellular ATP synthesis. Sticking to 4\u201315 J/cm\u00b2 yields optimal bio-stimulatory results."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do clothes block red light wavelengths?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Red light (660nm) is significantly reflected and absorbed by standard fabrics. Near-infrared light (850nm) can partially penetrate thin light-colored synthetic fabrics, but direct bare skin exposure is universally recommended for optimal photon absorption."
+        }
+      }
+    ]
+  }
+]
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge">🔴 Photobiomodulation (PBM) & Photomedicine Standards</div>
+      <h1>Red Light Therapy Dose & Time Calculator</h1>
+      <p class="subtitle">Calculate exact treatment session minutes and seconds based on panel irradiance (mW/cm²), target energy density (J/cm²), and body distance.</p>
+    </header>
+
+    <!-- AdSense Top Banner -->
+    <div style="text-align:center; margin: 16px 0;">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-3381238987477190"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <main class="calc-grid">
+      <!-- Inputs Card -->
+      <form class="card" id="red-light-therapy-dose-calculator-form" onsubmit="event.preventDefault();">
+        <h2>📐 Device Irradiance & Target Energy</h2>
+        
+        <div class="input-row">
+          <div class="form-group">
+            <label for="deviceIrradiance">Device Irradiance at Skin Distance</label>
+            <div class="input-wrap">
+              <input type="number" id="deviceIrradiance" step="5" min="5" max="300" value="65" required>
+              <span class="input-suffix">mW/cm²</span>
+            </div>
+            <span class="hint">Check manufacturer specs at 6" (typically 40–80 mW/cm²)</span>
+          </div>
+          <div class="form-group">
+            <label for="treatmentTarget">Therapeutic Target / Tissue Depth</label>
+            <select id="treatmentTarget">
+              <option value="4" selected>Superficial / Skin Health (Collagen, Anti-Aging: 3–6 J/cm²)</option>
+              <option value="12">Moderate / Muscle Recovery & Tendons (8–15 J/cm²)</option>
+              <option value="25">Deep Tissue / Bone, Joints & Deep Spine (20–30 J/cm²)</option>
+              <option value="custom">Custom J/cm² Energy Fluence</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="input-row">
+          <div class="form-group" id="customJoulesGroup" style="display:none;">
+            <label for="targetJoules">Custom Target Fluence</label>
+            <div class="input-wrap">
+              <input type="number" id="targetJoules" step="1" min="1" max="60" value="10">
+              <span class="input-suffix">J/cm²</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="distanceInches">Distance from Light Array</label>
+            <div class="input-wrap">
+              <input type="number" id="distanceInches" step="1" min="1" max="36" value="6" required>
+              <span class="input-suffix">inches</span>
+            </div>
+            <span class="hint">Recommended distance: 6 to 12 inches</span>
+          </div>
+        </div>
+        
+      </form>
+
+      <!-- Results Card -->
+      <div class="card">
+        <h2>⏱️ Prescribed Treatment Duration</h2>
+        
+        <div class="result-hero">
+          <div class="result-hero-val" id="resDuration">2 min 34 sec</div>
+          <div class="result-hero-label">Recommended Session Time per Area</div>
+        </div>
+
+        <div class="specs-grid">
+          <div class="spec-item">
+            <div class="spec-desc">Delivered Energy Fluence</div>
+            <div class="spec-val" id="resDeliveredJoules">10.0 J/cm²</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-desc">Effective Irradiance at Skin</div>
+            <div class="spec-val" id="resEffectivePower">65.0 mW/cm²</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-desc">Total Seconds Required</div>
+            <div class="spec-val" id="resTotalSec">154 seconds</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-desc">Weekly Session Frequency</div>
+            <div class="spec-val">3 to 5 times / week</div>
+          </div>
+        </div>
+        
+      </div>
+    </main>
+
+    
+    <!-- Clinical & Safety Disclaimers -->
+    <section class="medical-card">
+      <h3>⚠️ Photobiomodulation Safety & Biphasic Dose Alert</h3>
+      <div class="warning-callout">
+        <strong>The Arndt-Schulz Law (Biphasic Dose Curve):</strong> In phototherapy, <em>more is not better</em>. Lower doses (3–15 J/cm²) stimulate mitochondrial cytochrome c oxidase and ATP production, whereas excessive doses (> 35 J/cm²) cause phototoxicity and cellular inhibition.
+        <br><br>
+        <strong>Retinal Protection:</strong> High-powered near-infrared (850nm) and deep red (660nm) LEDs can cause permanent thermal retinal damage. Always wear certified phototherapy eye protection goggles during face exposure.
+        <br><br>
+        <strong>Contraindications:</strong> Do not shine photobiomodulation devices directly over confirmed malignant melanoma, suspicious skin tumors, active thyroid gland nodules, or if taking photosensitizing medications (e.g., Accutane, doxycycline).
+      </div>
+    </section>
+
+    <!-- Clinical Evidence Citations -->
+    <section class="citations-section">
+      <h3>📚 Peer-Reviewed Photomedicine Research (PubMed / NLM)</h3>
+      <div class="citations-grid">
+        <div class="citation-item">
+          <div class="citation-title">Mechanisms and applications of the anti-inflammatory effects of photobiomodulation</div>
+          <div class="citation-authors">Hamblin MR. — <em>AIMS Biophysics</em>, 2017</div>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/28070154/" target="_blank" rel="noopener noreferrer" class="citation-link">PubMed PMID: 28070154 ↗</a>
+        </div>
+        <div class="citation-item">
+          <div class="citation-title">Biphasic dose response in low level light therapy: Dose-dependent cellular effects</div>
+          <div class="citation-authors">Huang YY, Chen AC, Carroll JD, Hamblin MR. — <em>Dose Response</em>, 2009</div>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/20011653/" target="_blank" rel="noopener noreferrer" class="citation-link">PubMed PMID: 20011653 ↗</a>
+        </div>
+        <div class="citation-item">
+          <div class="citation-title">Proposed Mechanisms of Photobiomodulation or Low-Level Light Therapy</div>
+          <div class="citation-authors">de Freitas LF, Hamblin MR. — <em>IEEE Journal of Selected Topics in Quantum Electronics</em>, 2016</div>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/27773899/" target="_blank" rel="noopener noreferrer" class="citation-link">PubMed PMID: 27773899 ↗</a>
+        </div>
+      </div>
+    </section>
+        
+
+    <!-- Amazon Supplies Box -->
+    <section class="supplies-card">
+      <h3>🔬 Recommended Red & Near-Infrared Phototherapy Gear</h3>
+      <div class="supplies-grid">
+        <div class="supply-item">
+          <div>
+            <div class="supply-title">Dual-Chip Red (660nm) & Near-Infrared (850nm) Panel</div>
+            <div class="supply-desc">High-irradiance targeted red light therapy panel with dual wavelength optical lenses and built-in timer.</div>
+          </div>
+          <a href="https://www.amazon.com/s?k=red+light+therapy+panel+660nm+850nm&tag=sebiglesias-20" target="_blank" rel="nofollow noopener" class="btn-amazon">Check on Amazon →</a>
+        </div>
+        <div class="supply-item">
+          <div>
+            <div class="supply-title">Certified Laser & Phototherapy Opaque Eye Protection Goggles</div>
+            <div class="supply-desc">Medical-grade blackout goggles blocking high-power red and NIR light to safeguard retinal health.</div>
+          </div>
+          <a href="https://www.amazon.com/s?k=laser+safety+glasses+red+light+therapy+goggles&tag=sebiglesias-20" target="_blank" rel="nofollow noopener" class="btn-amazon">Check on Amazon →</a>
+        </div>
+        <div class="supply-item">
+          <div>
+            <div class="supply-title">Solar / Optical Power Solar Power Meter</div>
+            <div class="supply-desc">Calibrated optical power meter to independently measure irradiance (mW/cm²) at your exact treatment distance.</div>
+          </div>
+          <a href="https://www.amazon.com/s?k=solar+power+meter+irradiance+red+light&tag=sebiglesias-20" target="_blank" rel="nofollow noopener" class="btn-amazon">Check on Amazon →</a>
+        </div>
+        <div class="supply-item">
+          <div>
+            <div class="supply-title">Heavy-Duty Floor Stand & Door Mount for Light Panels</div>
+            <div class="supply-desc">Adjustable wheeled mobile trolley stand for horizontal and vertical hands-free treatment positioning.</div>
+          </div>
+          <a href="https://www.amazon.com/s?k=red+light+therapy+panel+floor+stand&tag=sebiglesias-20" target="_blank" rel="nofollow noopener" class="btn-amazon">Check on Amazon →</a>
+        </div>
+      </div>
+      <p style="font-size:0.75rem; color:#94a3b8; margin-top:14px; margin-bottom:0; text-align:center;">
+        ⚖️ <em>Affiliate Notice: As an Amazon Associate, this site earns from qualifying purchases at no additional cost to you. We strictly link to third-party tested LED therapy panels, optical power meters, and certified eye protection goggles.</em>
+      </p>
+    </section>
+
+    <!-- FAQ Section for SEO -->
+    <section class="faq-section">
+      <h2 style="font-size:1.35rem; color:#ffffff; margin-bottom:16px;">Frequently Asked Questions</h2>
+      <div class="faq-item">
+        <div class="faq-q">How do I calculate red light therapy treatment time?</div>
+        <div class="faq-a">Use the standard photobiology formula: Session Time (seconds) = [Target Fluence (Joules/cm²) × 1000] ÷ Irradiance (mW/cm²). For instance, delivering 6 J/cm² with a panel measuring 50 mW/cm² requires (6 × 1000) / 50 = 120 seconds (2 minutes).</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I overdo red light therapy?</div>
+        <div class="faq-a">Yes. Due to the biphasic dose response (Arndt-Schulz curve), excessive light exposure (>30 J/cm² on a single area) triggers phototoxicity and reduces cellular ATP synthesis. Sticking to 4–15 J/cm² yields optimal bio-stimulatory results.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Do clothes block red light wavelengths?</div>
+        <div class="faq-a">Red light (660nm) is significantly reflected and absorbed by standard fabrics. Near-infrared light (850nm) can partially penetrate thin light-colored synthetic fabrics, but direct bare skin exposure is universally recommended for optimal photon absorption.</div>
+      </div>
+    </section>
+
+    <!-- Bottom AdSense Banner -->
+    <div style="text-align:center; margin: 32px 0;">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-3381238987477190"
+           data-ad-slot="auto"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <footer>
+      <p>© 2026 <a href='https://sebiglesias.com.ar/'>sebiglesias.com.ar</a> · Red Light Therapy Dose Calculator. Educational and photomedicine reference tool. Not medical advice.</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

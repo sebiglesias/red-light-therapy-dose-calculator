@@ -1,0 +1,15 @@
+{
+  "name": "Red Light Therapy Dose Calculator \u2014 Joules/cm\u00b2 & Session Time",
+  "short_name": "RLT Dose Calc",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0a0404",
+  "theme_color": "#ef4444",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
